@@ -1,2 +1,5 @@
 # Seven_Bridges_of_Konigsberg
 No routes possible calculated with AMPL
+
+https://en.wikipedia.org/wiki/Seven_Bridges_of_Konigsberg
+
