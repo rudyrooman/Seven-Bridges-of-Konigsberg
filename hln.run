@@ -1,0 +1,33 @@
+reset;
+option solver cplex;
+option solver_msg 0;
+option omit_zero_rows 1;
+model '/home/rudy/Dropbox/IT/ampl/hln/hln.mod';
+data '/home/rudy/Dropbox/IT/ampl/hln/hln.dat';
+
+
+param getal;
+let getal:=1; # hoeveel berekeningen
+
+# op een schets kan je ook zien wat er mogelijk is
+# bij allemaal even kp kom je in dezelfde plaats aan als vertrek
+# er mogen 0 of 2 oneven kp zijn en dan moet je vertrekken in 1 oneven punt en aankomen in andere.
+
+# onderstaande laat een oplossing zien als er 1 is.
+# meerdere oplossingen zijn mogelijk. 
+
+#fix Use['b','e',1]:=1; # we forceren een richting 
+
+for {sk in kruispunt} {
+	let start := sk;
+	
+	for { ek in kruispunt} {
+		let einde := ek;
+		solve;
+		print getal,start, einde;	
+		let getal:= getal+1;
+		if solve_result <> "infeasible" then display Use ;
+		if solve_result = "infeasible" then print 'geen route';
+		
+	}
+}
